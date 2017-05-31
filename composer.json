@@ -1,0 +1,17 @@
+{
+    "name": "fraudshield/fraudshield-php",
+    "description": "Fraudshield PHP Library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Youghourta Benali",
+            "email": "youghourta@gmail.com"
+        }
+    ],
+    "require": {
+    },
+
+    "autoload": {
+        "psr-4": { "Fraudshield\\" : "src/" }
+      }
+}
