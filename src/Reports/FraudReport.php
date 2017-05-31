@@ -11,6 +11,7 @@ class FraudReport
     private $timezone;
     private $dataSources;
     private $filters;
+    private $extraFilters;
     public $parameters;
 
     const MAX_DATA_SOURCES = 3;
@@ -35,6 +36,7 @@ class FraudReport
         }
         if (count($this->dataSources) < 3) {
             $this->dataSources[] = $source;
+            $this->extraFilters[] = $source;
         } else {
             throw new \Exception("you cannot add more than 3 data sources at a time", 1);
         }
@@ -72,7 +74,7 @@ class FraudReport
 
     public function addFilter($filterName, $value)
     {
-        if (! in_array($filterName, self::VALID_FILTERS) ) {
+        if (! in_array($filterName, $this->getValidFilters()) ) {
             throw new \Exception("invalid filter", 1);
         }
         if (! is_numeric($value)) {
@@ -109,6 +111,12 @@ class FraudReport
 
         $this->dataSources = [];
         $this->filters = [];
+        $this->extraFilters= [];
+    }
+
+    private function getValidFilters()
+    {
+        return array_merge(self::VALID_FILTERS, $this->extraFilters);
     }
 
 
