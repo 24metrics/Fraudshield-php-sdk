@@ -15,7 +15,7 @@ class FraudReport
     private $dataSources;
     private $filters;
     private $extraFilters;
-    public $parameters;
+    private $parameters;
 
     const END_POINT = "reports/fraud.json";
     const MAX_DATA_SOURCES = 3;
@@ -62,7 +62,7 @@ class FraudReport
 
     public function setStartDate($date)
     {
-        if ($this->isValidDate($date)) {
+        if ($date && $this->isValidDate($date)) {
             $this->dateStart = $date;
         }
 
@@ -72,7 +72,7 @@ class FraudReport
 
     public function setEndDate($date)
     {
-        if ($this->isValidDate($date)) {
+        if ($date &&  $this->isValidDate($date)) {
             $this->dateEnd = $date;
         }
 
@@ -108,7 +108,7 @@ class FraudReport
 
     public function getPartialApiRequest()
     {
-
+        $this->prepareParameters();
         $query = '';
         if ($this->parameters) {
             $query = http_build_query($this->parameters);
@@ -120,7 +120,7 @@ class FraudReport
 
     private function initializeDefauts()
     {
-        $today = $today = date("Y-m-d");
+        $today = date("Y-m-d");
         if ( ($this->dateStart == null) ||  ($this->dateEnd == null)) {
             $this->dateStart = $today;
             $this->dateEnd = $today;
@@ -150,6 +150,14 @@ class FraudReport
         }
         throw new Exception("Invalid Date", 1);
         
+    }
+
+    public function __get($propertyName)
+    {
+        if($this->{$propertyName}) {
+            return $this->{$propertyName};
+        }
+        return null;
     }
 
 
