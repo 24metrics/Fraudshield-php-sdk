@@ -2,20 +2,14 @@
 
 namespace Fraudshield\Reports;
 
-use DateTime;
 use Exception;
 
-class FraudReport
+class FraudReport extends Report
 {
     
-    private $trackerId;
-    private $dateStart;
-    private $dateEnd;
-    private $timezone;
-    private $dataSources;
-    private $filters;
-    private $extraFilters;
-    private $parameters;
+    protected $dataSources;
+    protected $filters;
+    protected $extraFilters;
 
     const END_POINT = "reports/fraud.json";
     const MAX_DATA_SOURCES = 3;
@@ -29,7 +23,7 @@ class FraudReport
         $this->setStartDate($dateStart);
         $this->setEndDate($dateEnd);
         $this->timezone = $timezone;
-        $this->initializeDefauts();
+        $this->initializeDefaults();
     }
 
     public function addDataSource($source)
@@ -60,26 +54,7 @@ class FraudReport
         return $this;
     }
 
-    public function setStartDate($date)
-    {
-        if ($date && $this->isValidDate($date)) {
-            $this->dateStart = $date;
-        }
-
-        return $this;
-        
-    }
-
-    public function setEndDate($date)
-    {
-        if ($date &&  $this->isValidDate($date)) {
-            $this->dateEnd = $date;
-        }
-
-        return $this;
-    }
-
-    public function prepareParameters()
+    protected function prepareParameters()
     {
         $this->parameters['tracker_id'] = $this->trackerId;        
         $group= [];
@@ -102,33 +77,13 @@ class FraudReport
         $this->parameters['date_end'] = $this->dateEnd;
         $this->parameters['timezone'] = $this->timezone;
         
-        return $this;
-        
-    }
-
-    public function getPartialApiRequest()
-    {
-        $this->prepareParameters();
-        $query = '';
-        if ($this->parameters) {
-            $query = http_build_query($this->parameters);
-        }
-        $uri = self::END_POINT.'?'.$query;
-        return $uri;
+        return $this;   
     }
     
 
-    private function initializeDefauts()
+    protected function initializeDefaults()
     {
-        $today = date("Y-m-d");
-        if ( ($this->dateStart == null) ||  ($this->dateEnd == null)) {
-            $this->dateStart = $today;
-            $this->dateEnd = $today;
-        }
-
-        if ($this->timezone == null) {
-            $this->timezone = "UTC";
-        }
+        $this->initializeDefaultDate();
 
         $this->dataSources = [];
         $this->filters = [];
@@ -139,26 +94,5 @@ class FraudReport
     {
         return array_merge(self::VALID_FILTERS, $this->extraFilters);
     }
-
-    private function isValidDate($date)
-    {
-
-        $dt = DateTime::createFromFormat("Y-m-d", $date);
-
-        if ($dt) {
-            return true;
-        }
-        throw new Exception("Invalid Date", 1);
-        
-    }
-
-    public function __get($propertyName)
-    {
-        if($this->{$propertyName}) {
-            return $this->{$propertyName};
-        }
-        return null;
-    }
-
 
 }
