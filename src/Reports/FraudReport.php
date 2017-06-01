@@ -3,6 +3,7 @@
 namespace Fraudshield\Reports;
 
 use DateTime;
+use Exception;
 
 class FraudReport
 {
@@ -34,13 +35,13 @@ class FraudReport
     public function addDataSource($source)
     {
         if (! in_array($source, self::VALID_DATA_SOURCES) ) {
-            throw new \Exception("invalid data source", 1);
+            throw new Exception("invalid data source", 1);
         }
         if (count($this->dataSources) < 3) {
             $this->dataSources[] = $source;
             $this->extraFilters[] = $source;
         } else {
-            throw new \Exception("you cannot add more than 3 data sources at a time", 1);
+            throw new Exception("you cannot add more than 3 data sources at a time", 1);
         }
 
         return $this;
@@ -49,10 +50,10 @@ class FraudReport
     public function addFilter($filterName, $value)
     {
         if (! in_array($filterName, $this->getValidFilters()) ) {
-            throw new \Exception("invalid filter", 1);
+            throw new Exception("invalid filter", 1);
         }
         if (! is_numeric($value)) {
-            throw new \Exception("invalid value for the filter", 1);
+            throw new Exception("invalid value for the filter", 1);
         }
         $this->filters[$filterName] = $value;
 
@@ -147,7 +148,7 @@ class FraudReport
         if ($dt) {
             return true;
         }
-        throw new \Exception("Invalid Date", 1);
+        throw new Exception("Invalid Date", 1);
         
     }
 
