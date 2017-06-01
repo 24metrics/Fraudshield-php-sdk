@@ -2,6 +2,8 @@
 
 namespace Fraudshield\Reports;
 
+use DateTime;
+
 class FraudReport
 {
     
@@ -14,17 +16,17 @@ class FraudReport
     private $extraFilters;
     public $parameters;
 
+    const END_POINT = "reports/fraud.json";
     const MAX_DATA_SOURCES = 3;
     const VALID_DATA_SOURCES = ['sub_id', 'partner', 'affiliate', 'product', 'goal'];
     const VALID_FILTERS = ['min_conversions', 'min_rejection_rate', 'max_rejection_rate', 'min_goals_reached', 'max_goals_reached'];
     private $apiBase = "https://fraudshield.local/api/v1/";
-    const END_POINT = "reports/fraud.json";
 
     public function __construct($trackerId, $dateStart = null, $dateEnd = null, $timezone = null)
     {
         $this->trackerId = $trackerId;
-        $this->dateStart = $dateStart;
-        $this->dateEnd = $dateEnd;
+        $this->setStartDate($dateStart);
+        $this->setEndDate($dateEnd);
         $this->timezone = $timezone;
         $this->initializeDefauts();
     }
@@ -39,6 +41,38 @@ class FraudReport
             $this->extraFilters[] = $source;
         } else {
             throw new \Exception("you cannot add more than 3 data sources at a time", 1);
+        }
+
+        return $this;
+    }
+
+    public function addFilter($filterName, $value)
+    {
+        if (! in_array($filterName, $this->getValidFilters()) ) {
+            throw new \Exception("invalid filter", 1);
+        }
+        if (! is_numeric($value)) {
+            throw new \Exception("invalid value for the filter", 1);
+        }
+        $this->filters[$filterName] = $value;
+
+        return $this;
+    }
+
+    public function setStartDate($date)
+    {
+        if ($this->isValidDate($date)) {
+            $this->dateStart = $date;
+        }
+
+        return $this;
+        
+    }
+
+    public function setEndDate($date)
+    {
+        if ($this->isValidDate($date)) {
+            $this->dateEnd = $date;
         }
 
         return $this;
@@ -67,22 +101,8 @@ class FraudReport
         $this->parameters['date_end'] = $this->dateEnd;
         $this->parameters['timezone'] = $this->timezone;
         
-
         return $this;
         
-    }
-
-    public function addFilter($filterName, $value)
-    {
-        if (! in_array($filterName, $this->getValidFilters()) ) {
-            throw new \Exception("invalid filter", 1);
-        }
-        if (! is_numeric($value)) {
-            throw new \Exception("invalid value for the filter", 1);
-        }
-        $this->filters[$filterName] = $value;
-
-        return $this;
     }
 
     public function getPartialApiRequest()
@@ -117,6 +137,18 @@ class FraudReport
     private function getValidFilters()
     {
         return array_merge(self::VALID_FILTERS, $this->extraFilters);
+    }
+
+    private function isValidDate($date)
+    {
+
+        $dt = DateTime::createFromFormat("Y-m-d", $date);
+
+        if ($dt) {
+            return true;
+        }
+        throw new \Exception("Invalid Date", 1);
+        
     }
 
 
