@@ -31,11 +31,11 @@ class FraudReport extends Report
         if (! in_array($source, self::VALID_DATA_SOURCES) ) {
             throw new Exception("invalid data source", 1);
         }
-        if (count($this->dataSources) < 3) {
+        if (count($this->dataSources) < self::MAX_DATA_SOURCES) {
             $this->dataSources[] = $source;
             $this->extraFilters[] = $source;
         } else {
-            throw new Exception("you cannot add more than 3 data sources at a time", 1);
+            throw new Exception("you cannot add more than ".self::MAX_DATA_SOURCES." data sources at a time", 1);
         }
 
         return $this;
