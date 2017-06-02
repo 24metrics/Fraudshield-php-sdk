@@ -31,7 +31,7 @@ Abstract class Report
         return $this;
     }
 
-    private function isValidDate($date)
+    protected function isValidDate($date)
     {
 
         $dt = DateTime::createFromFormat("Y-m-d", $date);
@@ -79,4 +79,37 @@ Abstract class Report
     }
 
     abstract protected function prepareParameters();
+
+    public function addDataSource($source)
+    {
+        if (! in_array($source, static::VALID_DATA_SOURCES) ) {
+            throw new Exception("invalid data source", 1);
+        }
+        if (count($this->dataSources) < static::MAX_DATA_SOURCES) {
+            $this->dataSources[] = $source;
+            $this->extraFilters[] = $source;
+        } else {
+            throw new Exception("you cannot add more than ".static::MAX_DATA_SOURCES." data sources at a time", 1);
+        }
+
+        return $this;
+    }
+
+    public function addFilter($filterName, $value)
+    {
+        if (! in_array($filterName, $this->getValidFilters()) ) {
+            throw new Exception("invalid filter", 1);
+        }
+        if (! is_numeric($value)) {
+            throw new Exception("invalid value for the filter", 1);
+        }
+        $this->filters[$filterName] = $value;
+
+        return $this;
+    }
+
+    protected function getValidFilters()
+    {
+        return array_merge(static::VALID_FILTERS, $this->extraFilters);
+    }
 }

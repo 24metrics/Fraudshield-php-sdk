@@ -26,33 +26,7 @@ class FraudReport extends Report
         $this->initializeDefaults();
     }
 
-    public function addDataSource($source)
-    {
-        if (! in_array($source, self::VALID_DATA_SOURCES) ) {
-            throw new Exception("invalid data source", 1);
-        }
-        if (count($this->dataSources) < self::MAX_DATA_SOURCES) {
-            $this->dataSources[] = $source;
-            $this->extraFilters[] = $source;
-        } else {
-            throw new Exception("you cannot add more than ".self::MAX_DATA_SOURCES." data sources at a time", 1);
-        }
-
-        return $this;
-    }
-
-    public function addFilter($filterName, $value)
-    {
-        if (! in_array($filterName, $this->getValidFilters()) ) {
-            throw new Exception("invalid filter", 1);
-        }
-        if (! is_numeric($value)) {
-            throw new Exception("invalid value for the filter", 1);
-        }
-        $this->filters[$filterName] = $value;
-
-        return $this;
-    }
+    
 
     protected function prepareParameters()
     {
@@ -90,9 +64,6 @@ class FraudReport extends Report
         $this->extraFilters= [];
     }
 
-    private function getValidFilters()
-    {
-        return array_merge(self::VALID_FILTERS, $this->extraFilters);
-    }
+    
 
 }

@@ -9,19 +9,14 @@ class GlobalReportTest extends TestCase
 
     protected function setUp()
     {
-        $this->gr = new GlobalReport(1);
+        $this->gr = new GlobalReport();
     }
 
-    /** @test */
-    public function it_can_generate_report_with_just_tracker_id()
-    {
-        $this->assertInstanceOf(GlobalReport::class, $this->gr);
-    }
 
     /** @test */
     public function it_sets_start_end_date_to_today_if_empty()
     {
-        $gr = new GlobalReport(1);
+        $gr = new GlobalReport();
         $today = date("Y-m-d");
         $this->assertEquals($today, $gr->dateStart);
         $this->assertEquals($today, $gr->dateEnd);
@@ -32,8 +27,7 @@ class GlobalReportTest extends TestCase
     {
         $start = "2017-05-01";
         $end ="2017-06-01";
-        $gr = new GlobalReport(1, $start, $end);
-        $this->assertEquals(1, $gr->trackerId);
+        $gr = new GlobalReport($start, $end);
         $this->assertEquals($start, $gr->dateStart);
         $this->assertEquals($end, $gr->dateEnd);
     }
@@ -102,7 +96,7 @@ class GlobalReportTest extends TestCase
     {
         $start = "2017-May-01";
         $end ="2017-06-01";
-        $fr = new FraudReport(1, $start, $end);
+        $fr = new GlobalReport($start, $end);
     }
 
 

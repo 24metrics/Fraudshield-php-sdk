@@ -118,14 +118,14 @@ class FraudReportTest extends TestCase
     */
     public function it_can_generate_partial_api_request()
     {
-        $start = "2017-5-01";
+        $start = "2017-05-01";
         $end ="2017-06-01";
         $fr = new FraudReport(1, $start, $end);
         $fr->addDataSource('partner')->addFilter('min_rejection_rate', 10);
         $request = $fr->getPartialApiRequest();
         
         $this->assertRegexp('/reports\/fraud.json/', $request);
-        $this->assertRegexp('/2017-5-01/', $request);
+        $this->assertRegexp('/2017-05-01/', $request);
         $this->assertRegexp('/2017-06-01/', $request);
         $this->assertRegexp('/partner/', $request);
         $this->assertRegexp('/min_rejection_rate/', $request);
