@@ -47,20 +47,4 @@ class ConversionReportTest extends TestCase
         $this->cr->setSorting('id', 'asc');
         $this->assertEquals('asc', $this->cr->sorting['id']);
     }
-
-    /** @test */
-    public function it_can_prepare_parameters_array()
-    {
-        $this->cr->setPageSize(100);
-        $this->cr->setPageNumber(5);
-        $this->cr->setSorting('id', 'asc');
-        $this->cr->prepareParameters();
-        var_dump($this->cr->parameters);
-
-    }
-
-
-
-
-
 }
