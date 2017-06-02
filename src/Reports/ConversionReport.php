@@ -46,7 +46,7 @@ class ConversionReport extends Report
 
     public function setSorting($column, $value)
     {
-        $this->sorting[$column] = $value;
+        $this->sorting = [$column => $value];
 
         return $this;
     }
