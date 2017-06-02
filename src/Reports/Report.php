@@ -12,6 +12,9 @@ Abstract class Report
     protected $timezone;
     protected $parameters;
 
+    abstract protected  function initializeDefaults();
+    abstract protected function prepareParameters();
+
     public function setStartDate($date)
     {
         if ($date && $this->isValidDate($date)) {
@@ -43,7 +46,7 @@ Abstract class Report
         
     }
 
-    protected abstract function initializeDefaults();
+   
 
     protected function initializeDefaultDate()
     {
@@ -77,8 +80,6 @@ Abstract class Report
         $uri = static::END_POINT.'?'.$query;
         return $uri;
     }
-
-    abstract protected function prepareParameters();
 
     public function addDataSource($source)
     {
