@@ -40,11 +40,4 @@ class ConversionReportTest extends TestCase
         $this->cr->setPageNumber(5);
         $this->assertEquals(5, $this->cr->page);
     }
-
-    /** @test */
-    public function it_can_set_sorting()
-    {
-        $this->cr->setSorting('id', 'asc');
-        $this->assertEquals('asc', $this->cr->sorting['id']);
-    }
 }

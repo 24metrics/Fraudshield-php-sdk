@@ -9,7 +9,6 @@ class ConversionReport extends Report
 {
     protected $count;
     protected $page;
-    protected $sorting;
 
     const END_POINT = "reports/conversion.json";
 
@@ -27,7 +26,6 @@ class ConversionReport extends Report
         $this->initializeDefaultDate();
         $this->count = 50;
         $this->page = 1;
-        $this->sorting['id']='desc';
     }
 
     public function setPageSize($size)
@@ -44,13 +42,6 @@ class ConversionReport extends Report
         return $this;
     }
 
-    public function setSorting($column, $value)
-    {
-        $this->sorting = [$column => $value];
-
-        return $this;
-    }
-
     protected function prepareParameters()
     {
         $this->parameters['tracker_id'] = $this->trackerId;
@@ -58,7 +49,6 @@ class ConversionReport extends Report
         $this->parameters['goal'] = false;
         $this->parameters['count'] = $this->count;
         $this->parameters['page'] = $this->page;
-        $this->parameters['sorting'] = $this->sorting;
 
         $this->parameters['date_start'] = $this->dateStart;
         $this->parameters['date_end'] = $this->dateEnd;
