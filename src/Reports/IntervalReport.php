@@ -1,9 +1,5 @@
 <?php
-
 namespace Fraudshield\Reports;
-
-
-use Exception;
 
 class IntervalReport extends Report
 {
@@ -34,10 +30,6 @@ class IntervalReport extends Report
         $this->count = 25;
         $this->page = 1;
         $this->timeInterval = "week";
-
-        
-
-        return $this;
     }
 
     protected function prepareParameters()

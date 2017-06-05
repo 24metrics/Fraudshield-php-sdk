@@ -1,9 +1,5 @@
 <?php
-
 namespace Fraudshield\Reports;
-
-use DateTime;
-use Exception;
 
 class ConversionReport extends Report
 {
@@ -37,5 +33,4 @@ class ConversionReport extends Report
 
         $this->prepareTimeParameters();
     }
-
 }

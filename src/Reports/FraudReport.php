@@ -1,12 +1,8 @@
 <?php
-
 namespace Fraudshield\Reports;
-
-use Exception;
 
 class FraudReport extends Report
 {
-
     const END_POINT = "reports/fraud.json";
     const MAX_DATA_SOURCES = 3;
     const VALID_DATA_SOURCES = ['sub_id', 'partner', 'affiliate', 'product', 'goal'];

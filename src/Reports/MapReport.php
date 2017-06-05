@@ -1,5 +1,4 @@
 <?php
-
 namespace Fraudshield\Reports;
 
 class MapReport extends Report
@@ -22,7 +21,7 @@ class MapReport extends Report
     {
         $this->initializeDefaultDate();
         $this->initializeWithEmptyValues();
-        
+
         $this->dataSources = ['country_code'];
     }
 
@@ -48,5 +47,4 @@ class MapReport extends Report
         
         return $this;
     }
-
 }

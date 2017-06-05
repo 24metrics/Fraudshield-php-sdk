@@ -1,8 +1,5 @@
 <?php
-
 namespace Fraudshield\Reports;
-
-use Exception;
 
 class GlobalReport extends Report
 {
@@ -23,7 +20,7 @@ class GlobalReport extends Report
     {
         $this->initializeDefaultDate();
         $this->initializeWithEmptyValues();
-        
+
         $this->dataSources = ['tracker_id'];
     }
 

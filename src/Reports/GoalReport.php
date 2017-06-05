@@ -1,7 +1,5 @@
 <?php
-
 namespace Fraudshield\Reports;
-
 
 class GoalReport extends Report
 {
@@ -33,7 +31,7 @@ class GoalReport extends Report
     protected function prepareParameters()
     {
         $this->parameters['tracker_id'] = $this->trackerId;        
-        $group= ['product', 'goal_name']; // this two should be sent with every request
+        $group= ['product', 'goal_name']; // these two should be sent with every request
         foreach ($this->dataSources as $ds) {
             $group[] = $ds;
         }
