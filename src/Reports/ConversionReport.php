@@ -7,8 +7,7 @@ use Exception;
 
 class ConversionReport extends Report
 {
-    protected $count;
-    protected $page;
+    use Pagination;
 
     const END_POINT = "reports/conversion.json";
 
@@ -28,19 +27,7 @@ class ConversionReport extends Report
         $this->page = 1;
     }
 
-    public function setPageSize($size)
-    {
-        $this->count = $size;
-
-        return $this;
-    }
-
-    public function setPageNumber($position)
-    {
-        $this->page = $position;
-
-        return $this;
-    }
+    
 
     protected function prepareParameters()
     {

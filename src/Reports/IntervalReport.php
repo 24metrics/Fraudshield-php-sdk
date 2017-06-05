@@ -7,9 +7,9 @@ use Exception;
 
 class IntervalReport extends Report
 {
+    use Pagination;
+    
     protected $chartType;
-    protected $count;
-    protected $page;
     protected $timeInterval;
 
     protected $dataSources;
@@ -39,7 +39,7 @@ class IntervalReport extends Report
         $this->timeInterval = "week";
 
         $this->dataSources = [];
-        $this->filters = ['abc'];
+        $this->filters = [];
         $this->extraFilters= [];
 
         return $this;

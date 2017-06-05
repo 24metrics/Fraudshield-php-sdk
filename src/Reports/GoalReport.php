@@ -5,12 +5,12 @@ namespace Fraudshield\Reports;
 
 class GoalReport extends Report
 {
+    use Pagination;
+
     protected $dataSources;
     protected $filters;
     protected $extraFilters;
 
-    protected $count;
-    protected $page;
 
     const END_POINT = "reports/goal.json";
     const MAX_DATA_SOURCES = 2;
@@ -36,20 +36,6 @@ class GoalReport extends Report
 
         $this->count = 10;
         $this->page = 1;
-    }
-
-    public function setPageSize($size)
-    {
-        $this->count = $size;
-
-        return $this;
-    }
-
-    public function setPageNumber($position)
-    {
-        $this->page = $position;
-
-        return $this;
     }
 
     protected function prepareParameters()
