@@ -26,7 +26,6 @@ Abstract class Report
         }
 
         return $this;
-        
     }
 
     public function setEndDate($date)
@@ -40,17 +39,14 @@ Abstract class Report
 
     protected function isValidDate($date)
     {
-
         $dt = DateTime::createFromFormat("Y-m-d", $date);
 
         if ($dt) {
+
             return true;
         }
         throw new Exception("Invalid Date", 1);
-        
     }
-
-   
 
     protected function initializeDefaultDate()
     {
@@ -127,5 +123,32 @@ Abstract class Report
         $this->parameters['date_start'] = $this->dateStart;
         $this->parameters['date_end'] = $this->dateEnd;
         $this->parameters['timezone'] = $this->timezone;
+    }
+
+    protected function prepareDataSources($mandatory=[])
+    {
+        $group= $mandatory;
+        foreach ($this->dataSources as $ds) {
+            $group[] = $ds;
+        }
+        if (count($group) > 0) {
+           $this->parameters['group'] = $group; 
+        }
+    }
+
+    protected function prepareSearch()
+    {
+        $search_fields= [];
+        foreach ($this->filters as $filter => $value) {
+            $search_fields[] = json_encode(["term" => $filter, "query" => $value]);
+        }
+        if (count($search_fields) > 0) {
+           $this->parameters['search_fields'] = $search_fields; 
+        }
+    }
+
+    protected function prepareTracker()
+    {
+        $this->parameters['tracker_id'] = $this->trackerId;
     }
 }

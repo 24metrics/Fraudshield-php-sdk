@@ -26,22 +26,8 @@ class GlobalReport extends Report
 
     protected function prepareParameters()
     {
-        $group= [];
-        foreach ($this->dataSources as $ds) {
-            $group[] = $ds;
-        }
-        if (count($group) > 0) {
-           $this->parameters['group'] = $group; 
-        }
-
-        $search_fields= [];
-        foreach ($this->filters as $filter => $value) {
-            $search_fields[] = json_encode(["term" => $filter, "query" => $value]);
-        }
-        if (count($search_fields) > 0) {
-           $this->parameters['search_fields'] = $search_fields; 
-        }
-
+        $this->prepareDataSources();
+        $this->prepareSearch();
         $this->prepareTimeParameters();
         
         return $this;
