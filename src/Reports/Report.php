@@ -101,9 +101,6 @@ Abstract class Report
         if (! in_array($filterName, $this->getValidFilters()) ) {
             throw new Exception("invalid filter", 1);
         }
-        if (! is_numeric($value)) {
-            throw new Exception("invalid value for the filter", 1);
-        }
         $this->filters[$filterName] = $value;
 
         return $this;
