@@ -24,10 +24,7 @@ class GoalReport extends Report
     protected function initializeDefaults()
     {
         $this->initializeDefaultDate();
-
-        $this->dataSources = [];
-        $this->filters = [];
-        $this->extraFilters= [];
+        $this->initializeWithEmptyValues();
 
         $this->count = 10;
         $this->page = 1;
@@ -52,9 +49,7 @@ class GoalReport extends Report
            $this->parameters['search_fields'] = $search_fields; 
         }
 
-        $this->parameters['date_start'] = $this->dateStart;
-        $this->parameters['date_end'] = $this->dateEnd;
-        $this->parameters['timezone'] = $this->timezone;
+        $this->prepareTimeParameters();
         
         $this->parameters['sorting']['rejected']="desc";
 

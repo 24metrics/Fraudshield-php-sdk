@@ -27,8 +27,6 @@ class ConversionReport extends Report
         $this->page = 1;
     }
 
-    
-
     protected function prepareParameters()
     {
         $this->parameters['tracker_id'] = $this->trackerId;
@@ -37,9 +35,7 @@ class ConversionReport extends Report
         $this->parameters['count'] = $this->count;
         $this->parameters['page'] = $this->page;
 
-        $this->parameters['date_start'] = $this->dateStart;
-        $this->parameters['date_end'] = $this->dateEnd;
-        $this->parameters['timezone'] = $this->timezone;
+        $this->prepareTimeParameters();
     }
 
 }

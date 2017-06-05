@@ -28,15 +28,14 @@ class IntervalReport extends Report
     protected function initializeDefaults()
     {
         $this->initializeDefaultDate();
+        $this->initializeWithEmptyValues();
 
         $this->chartType = 'conversion_rate';
         $this->count = 25;
         $this->page = 1;
         $this->timeInterval = "week";
 
-        $this->dataSources = [];
-        $this->filters = [];
-        $this->extraFilters= [];
+        
 
         return $this;
     }
@@ -48,9 +47,7 @@ class IntervalReport extends Report
         $this->parameters['page'] = $this->page;
         $this->parameters['time_interval'] = $this->timeInterval;
 
-        $this->parameters['date_start'] = $this->dateStart;
-        $this->parameters['date_end'] = $this->dateEnd;
-        $this->parameters['timezone'] = $this->timezone;
+        $this->prepareTimeParameters();
     }
 
 }

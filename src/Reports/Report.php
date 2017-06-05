@@ -114,4 +114,18 @@ Abstract class Report
     {
         return array_merge(static::VALID_FILTERS, $this->extraFilters);
     }
+
+    protected function initializeWithEmptyValues()
+    {
+        $this->dataSources = [];
+        $this->filters = [];
+        $this->extraFilters= [];
+    }
+
+    protected function prepareTimeParameters()
+    {
+        $this->parameters['date_start'] = $this->dateStart;
+        $this->parameters['date_end'] = $this->dateEnd;
+        $this->parameters['timezone'] = $this->timezone;
+    }
 }

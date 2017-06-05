@@ -21,6 +21,12 @@ class FraudReport extends Report
         $this->initializeDefaults();
     }
 
+    protected function initializeDefaults()
+    {
+        $this->initializeDefaultDate();
+        $this->initializeWithEmptyValues();
+    }
+
     protected function prepareParameters()
     {
         $this->parameters['tracker_id'] = $this->trackerId;        
@@ -40,19 +46,8 @@ class FraudReport extends Report
            $this->parameters['search_fields'] = $search_fields; 
         }
 
-        $this->parameters['date_start'] = $this->dateStart;
-        $this->parameters['date_end'] = $this->dateEnd;
-        $this->parameters['timezone'] = $this->timezone;
+        $this->prepareTimeParameters();
         
         return $this;   
-    }
-    
-    protected function initializeDefaults()
-    {
-        $this->initializeDefaultDate();
-
-        $this->dataSources = [];
-        $this->filters = [];
-        $this->extraFilters= [];
     }
 }

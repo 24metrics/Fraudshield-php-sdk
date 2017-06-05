@@ -18,6 +18,14 @@ class MapReport extends Report
         $this->initializeDefaults();
     }
 
+    protected function initializeDefaults()
+    {
+        $this->initializeDefaultDate();
+        $this->initializeWithEmptyValues();
+        
+        $this->dataSources = ['country_code'];
+    }
+
     protected function prepareParameters()
     {
         $group= [];
@@ -36,20 +44,9 @@ class MapReport extends Report
            $this->parameters['search_fields'] = $search_fields; 
         }
 
-        $this->parameters['date_start'] = $this->dateStart;
-        $this->parameters['date_end'] = $this->dateEnd;
-        $this->parameters['timezone'] = $this->timezone;
+        $this->prepareTimeParameters();
         
         return $this;
-    }
-
-    protected function initializeDefaults()
-    {
-        $this->initializeDefaultDate();
-
-        $this->dataSources = ['country_code'];
-        $this->filters = [];
-        $this->extraFilters= [];
     }
 
 }
