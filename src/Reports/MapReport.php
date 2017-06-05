@@ -4,10 +4,6 @@ namespace Fraudshield\Reports;
 
 class MapReport extends Report
 {
-    protected $dataSources;
-    protected $filters;
-    protected $extraFilters;
-
     const END_POINT = "reports/map.json";
     const MAX_DATA_SOURCES = 4;
     const VALID_DATA_SOURCES = ['tracker_id', 'affiliate', 'partner', 'product', 'sub_id', 'country_code'];

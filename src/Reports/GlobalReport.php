@@ -6,10 +6,6 @@ use Exception;
 
 class GlobalReport extends Report
 {
-    protected $dataSources;
-    protected $filters;
-    protected $extraFilters;
-
     const END_POINT = "reports/global.json";
     const MAX_DATA_SOURCES = 4;
     const VALID_DATA_SOURCES = ['tracker_id', 'affiliate', 'partner', 'product', 'sub_id', 'country_code'];

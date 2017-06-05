@@ -12,6 +12,10 @@ Abstract class Report
     protected $timezone;
     protected $parameters;
 
+    protected $dataSources;
+    protected $filters;
+    protected $extraFilters;
+
     abstract protected  function initializeDefaults();
     abstract protected function prepareParameters();
 

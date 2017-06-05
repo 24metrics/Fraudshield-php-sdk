@@ -6,10 +6,6 @@ use Exception;
 
 class FraudReport extends Report
 {
-    
-    protected $dataSources;
-    protected $filters;
-    protected $extraFilters;
 
     const END_POINT = "reports/fraud.json";
     const MAX_DATA_SOURCES = 3;
@@ -25,8 +21,6 @@ class FraudReport extends Report
         $this->timezone = $timezone;
         $this->initializeDefaults();
     }
-
-    
 
     protected function prepareParameters()
     {
@@ -63,7 +57,4 @@ class FraudReport extends Report
         $this->filters = [];
         $this->extraFilters= [];
     }
-
-    
-
 }

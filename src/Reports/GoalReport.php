@@ -7,11 +7,6 @@ class GoalReport extends Report
 {
     use Pagination;
 
-    protected $dataSources;
-    protected $filters;
-    protected $extraFilters;
-
-
     const END_POINT = "reports/goal.json";
     const MAX_DATA_SOURCES = 2;
     const VALID_DATA_SOURCES = ['affiliate', 'partner'];
