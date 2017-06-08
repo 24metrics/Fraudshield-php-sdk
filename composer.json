@@ -1,16 +1,15 @@
-{
+    {
     "name": "fraudshield/fraudshield-php",
-    "description": "Fraudshield PHP Library",
+    "type": "library",
+    "keywords": ["fraudshield", "fraud", "detection"],
+    "description": "A PHP wrapper for Fraudshield's API",
     "license": "MIT",
     "authors": [
         {
-            "name": "Youghourta Benali",
-            "email": "youghourta@gmail.com"
+            "name": "Fraudshield Dev Team",
+            "email": "contact@24metrics.com"
         }
     ],
-    "require": {
-    },
-
     "autoload": {
         "psr-4": { "Fraudshield\\" : "src/" }
       }
