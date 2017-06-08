@@ -9,7 +9,6 @@ class Fraudshield
 
     //@var string The base URL for the Fraudshield API.
     private $apiBase = "https://fraudshield.24metrics.com/api/v1/";
-    //private $apiBase = "https://fraudshield.local/api/v1/";
 
 
     public function __construct($userId, $apiToken)
@@ -35,7 +34,7 @@ class Fraudshield
     {
         $url = $this->getBaseUrl($uri);
 
-
+        var_dump($url); die();
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_HEADER, 0);
