@@ -35,11 +35,12 @@ class IntervalReport extends Report
     protected function prepareParameters()
     {
         $this->parameters['chart_type'] = $this->chartType;
-        $this->parameters['count'] = $this->count;
-        $this->parameters['page'] = $this->page;
         $this->parameters['time_interval'] = $this->timeInterval;
 
+        $this->prepareDataSources(['tracker_id']); // this should be sent with every request
+        $this->prepareSearch();
         $this->prepareTimeParameters();
+        $this->preparePagination();
     }
 
 }

@@ -151,4 +151,10 @@ Abstract class Report
     {
         $this->parameters['tracker_id'] = $this->trackerId;
     }
+
+    protected function preparePagination()
+    {
+        $this->parameters['count'] = $this->count;
+        $this->parameters['page'] = $this->page;
+    }
 }

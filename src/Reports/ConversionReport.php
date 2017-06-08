@@ -6,7 +6,7 @@ class ConversionReport extends Report
     use Pagination;
 
     const END_POINT = "reports/conversion.json";
-
+    const VALID_FILTERS = ['http_click_referer', 'country_code', 'remote_address', 'product', 'affiliate','partner', 'sub_id', 'status', 'rejected_reason.simple_reason', 'rejected_reason.simple_reason', 'min_score', 'max_score'];
     public function __construct($trackerId, $dateStart = null, $dateEnd = null, $timezone = null)
     {
         $this->trackerId = $trackerId;
@@ -25,12 +25,12 @@ class ConversionReport extends Report
 
     protected function prepareParameters()
     {
-        $this->parameters['tracker_id'] = $this->trackerId;
         $this->parameters['click'] = false;
         $this->parameters['goal'] = false;
-        $this->parameters['count'] = $this->count;
-        $this->parameters['page'] = $this->page;
-
+        
+        $this->prepareTracker();
+        $this->prepareSearch();
         $this->prepareTimeParameters();
+        $this->preparePagination();
     }
 }
