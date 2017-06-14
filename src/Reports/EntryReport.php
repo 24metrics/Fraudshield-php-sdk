@@ -1,7 +1,8 @@
 <?php
 namespace Fraudshield\Reports;
 
-class Entry
+
+class EntryReport
 {
 
     const END_POINT = "reports";
