@@ -2,7 +2,7 @@
 Welcome to Fraudshield PHP SDK. This repository contains Fraudshield's PHP SDK and samples for [REST API](http://developers.24metrics.com/).
 
 ## Installation
-`composer require "fraudshield/fraudshield"`
+`composer require "fraudshield/fraudshield-php"`
 
 ## Usage
 ```
