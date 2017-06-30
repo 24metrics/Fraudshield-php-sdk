@@ -4,6 +4,7 @@
     "keywords": ["fraudshield", "fraud", "detection"],
     "description": "A PHP wrapper for Fraudshield's API",
     "license": "MIT",
+    "minimum-stability": "stable",
     "require": {
             "php": "^5.3.3 || ^7.0"
     },
