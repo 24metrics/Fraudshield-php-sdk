@@ -5,7 +5,7 @@ Welcome to Fraudshield PHP SDK. This repository contains Fraudshield's PHP SDK a
 `composer require "fraudshield/fraudshield-php"`
 
 ## Usage
-```
+```php
 <?php
 use Fraudshield\Reports\ConversionReport;
 use Fraudshield\Fraudshield;
