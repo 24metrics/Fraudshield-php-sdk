@@ -1,10 +1,10 @@
-#Fraudshield PHP SDK
-Welcome to Fraudshield PHP SDK. This repository contains Fraudshield's PHP SDK and samples for [REST API](https://documentation.24metrics.com/).
+# Fraudshield PHP SDK
+Welcome to Fraudshield PHP SDK. This repository contains Fraudshield's PHP SDK and samples for [REST API](http://developers.24metrics.com/).
 
-##Installation
+## Installation
 `composer require "fraudshield/fraudshield"`
 
-##Usage
+## Usage
 ```
 <?php
 use Fraudshield\Reports\ConversionReport;
@@ -26,8 +26,8 @@ $report->addDataSource('sub_id')->addFilter('sub_id', 500);
 var_dump($fs->getReport($report));
 ```
 
-##SDK Documentation
-Our [API Documentation page](https://documentation.24metrics.com/) includes all the documentation related to this PHP SDK
+## SDK Documentation
+Our [API Documentation page](http://developers.24metrics.com/) includes all the documentation related to this PHP SDK
 
-##License
+## License
 MIT
