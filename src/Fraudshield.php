@@ -34,7 +34,6 @@ class Fraudshield
     {
         $url = $this->getBaseUrl($uri);
 
-        var_dump($url); die();
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_HEADER, 0);
