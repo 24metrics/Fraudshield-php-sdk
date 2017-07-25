@@ -111,13 +111,21 @@ Abstract class Report
     public function addDataSource($source)
     {
         if (!in_array($source, static::VALID_DATA_SOURCES)) {
-            throw new Exception("invalid data source", 1);
+            throw new Exception("invalid data source: {$source}", 1);
         }
+
         if (count($this->dataSources) < static::MAX_DATA_SOURCES) {
             $this->dataSources[] = $source;
             $this->extraFilters[] = $source;
         } else {
-            throw new Exception("you cannot add more than " . static::MAX_DATA_SOURCES . " data sources at a time", 1);
+            throw new Exception(
+                sprintf(
+                    "You tried to add %s data sources. You can not add more than %s data sources at a time",
+                    count($this->dataSources),
+                    static::MAX_DATA_SOURCES
+                )
+                , 1
+            );
         }
 
         return $this;
