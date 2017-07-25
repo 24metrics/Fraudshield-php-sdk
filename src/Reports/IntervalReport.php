@@ -1,18 +1,25 @@
 <?php
+
 namespace Fraudshield\Reports;
 
 class IntervalReport extends Report
 {
     use Pagination;
-    
+
     protected $chartType;
     protected $timeInterval;
 
     const END_POINT = "reports/interval.json";
-    const MAX_DATA_SOURCES = 3;
-    const VALID_DATA_SOURCES = ['tracker_id','affiliate', 'partner', 'product', 'sub_id'];
+    const MAX_DATA_SOURCES = 5;
+    const VALID_DATA_SOURCES = ['tracker_id', 'affiliate', 'partner', 'product', 'sub_id'];
     const VALID_FILTERS = [];
 
+    /**
+     * IntervalReport constructor.
+     * @param string $dateStart
+     * @param string $dateEnd
+     * @param string $timezone
+     */
     public function __construct($dateStart = null, $dateEnd = null, $timezone = null)
     {
         $this->setStartDate($dateStart);
