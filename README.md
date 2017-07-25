@@ -46,6 +46,7 @@ $report
     ->addDataSource('affiliate')
     ->addDataSource('product')
     ->addDataSource('goal');
+
 // add filter
 $report
     ->addFilter('min_conversions', 1)
@@ -53,7 +54,6 @@ $report
     ->addFilter('max_rejection_rate', 50)
     ->addFilter('min_goals_reached', 50)
     ->addFilter('max_goals_reached', 50);
-
 
 // dump the report content
 var_dump($fs->getReport($report));
