@@ -12,7 +12,6 @@ class GlobalReportTest extends TestCase
         $this->gr = new GlobalReport();
     }
 
-
     /** @test */
     public function it_sets_start_end_date_to_today_if_empty()
     {
@@ -26,7 +25,7 @@ class GlobalReportTest extends TestCase
     public function it_can_generate_report_with_tracker_id_and_start_date_and_end_date()
     {
         $start = "2017-05-01";
-        $end ="2017-06-01";
+        $end = "2017-06-01";
         $gr = new GlobalReport($start, $end);
         $this->assertEquals($start, $gr->dateStart);
         $this->assertEquals($end, $gr->dateEnd);
@@ -47,24 +46,31 @@ class GlobalReportTest extends TestCase
         $this->assertContains('partner', $this->gr->dataSources);
     }
 
-    /** @test 
-    * @expectedException Exception
-    */
+    /** @test
+     * @expectedException Exception
+     */
     public function it_throws_exception_when_adding_invalid_data_source()
     {
         $this->gr->addDataSource('some_invalid_data_source');
     }
 
-    /** @test 
-    * @expectedException Exception
-    */
+    /** @test
+     * @expectedException Exception
+     */
     public function it_throws_exception_when_adding_more_than_allowed_number_data_source()
     {
-        $this->gr->addDataSource('sub_id')->addDataSource('partner')->addDataSource('affiliate')->addDataSource('product');
+        $this->gr
+            ->addDataSource('sub_id')
+            ->addDataSource('partner')
+            ->addDataSource('and')
+            ->addDataSource('yet')
+            ->addDataSource('an')
+            ->addDataSource('other')
+            ->addDataSource('source');
     }
 
-    /** @test 
-    */
+    /** @test
+     */
     public function it_can_add_filters()
     {
         $this->gr->addFilter('tracker_id', 50);
@@ -72,32 +78,31 @@ class GlobalReportTest extends TestCase
 
     }
 
-    /** @test 
-    * @expectedException Exception
-    */
+    /** @test
+     * @expectedException Exception
+     */
     public function it_throws_exception_when_adding_invalid_filter()
     {
         $this->gr->addFilter('invalid_filter', 50);
     }
 
-    /** @test 
-    */
+    /** @test
+     */
     public function it_can_add_data_source_as_filter()
     {
         $this->gr->addDataSource('sub_id');
-        $this->gr->addFilter('sub_id', 500);        
+        $this->gr->addFilter('sub_id', 500);
         $this->assertArrayHasKey('sub_id', $this->gr->filters);
     }
 
-    /** @test 
-    * @expectedException Exception
-    */
+    /** @test
+     * @expectedException Exception
+     */
     public function it_throws_exception_when_using_invalid_date()
     {
         $start = "2017-May-01";
-        $end ="2017-06-01";
+        $end = "2017-06-01";
         $fr = new GlobalReport($start, $end);
     }
-
 
 }

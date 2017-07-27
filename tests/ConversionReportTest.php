@@ -23,6 +23,7 @@ class ConversionReportTest extends TestCase
     {
         $cr = new ConversionReport(1);
         $today = date("Y-m-d");
+
         $this->assertEquals($today, $cr->dateStart);
         $this->assertEquals($today, $cr->dateEnd);
     }
@@ -40,4 +41,5 @@ class ConversionReportTest extends TestCase
         $this->cr->setPageNumber(5);
         $this->assertEquals(5, $this->cr->page);
     }
+
 }

@@ -1,5 +1,8 @@
 <?php
+
 namespace Fraudshield;
+
+use Fraudshield\Reports\Report;
 
 class Fraudshield
 {
@@ -7,10 +10,15 @@ class Fraudshield
     private $userId;
     private $apiToken;
 
-    //@var string The base URL for the Fraudshield API.
+    /* @var string $apiBase The base URL for the Fraudshield API. */
     private $apiBase = "https://fraudshield.24metrics.com/api/v1/";
 
 
+    /**
+     * Fraudshield constructor.
+     * @param int $userId
+     * @param string $apiToken
+     */
     public function __construct($userId, $apiToken)
     {
         $this->userId = $userId;
@@ -18,7 +26,11 @@ class Fraudshield
     }
 
 
-    public function getReport($report)
+    /**
+     * @param Report $report
+     * @return mixed
+     */
+    public function getReport(Report $report)
     {
 
         $apiRequest = $report->getPartialApiRequest();
@@ -26,10 +38,22 @@ class Fraudshield
         return $this->get($apiRequest);
     }
 
+    /**
+     * @param string $uri
+     * @return string
+     */
     private function getBaseUrl($uri)
     {
-       return  $this->apiBase.$uri.'&'.http_build_query(['user_id' => $this->userId, 'api_token' =>$this->apiToken]);
+        return $this->apiBase . $uri . '&' . http_build_query([
+                'user_id' => $this->userId,
+                'api_token' => $this->apiToken
+            ]);
     }
+
+    /**
+     * @param string $uri
+     * @return mixed
+     */
     public function get($uri)
     {
         $url = $this->getBaseUrl($uri);

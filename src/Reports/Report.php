@@ -1,4 +1,5 @@
 <?php
+
 namespace Fraudshield\Reports;
 
 use DateTime;
@@ -16,9 +17,14 @@ Abstract class Report
     protected $filters;
     protected $extraFilters;
 
-    abstract protected  function initializeDefaults();
+    abstract protected function initializeDefaults();
+
     abstract protected function prepareParameters();
 
+    /**
+     * @param string $date
+     * @return Report $this
+     */
     public function setStartDate($date)
     {
         if ($date && $this->isValidDate($date)) {
@@ -28,30 +34,39 @@ Abstract class Report
         return $this;
     }
 
+    /**
+     * @param string $date
+     * @return Report $this
+     */
     public function setEndDate($date)
     {
-        if ($date &&  $this->isValidDate($date)) {
+        if ($date && $this->isValidDate($date)) {
             $this->dateEnd = $date;
         }
 
         return $this;
     }
 
+    /**
+     * @param string $date
+     * @return bool
+     * @throws Exception
+     */
     protected function isValidDate($date)
     {
         $dt = DateTime::createFromFormat("Y-m-d", $date);
 
         if ($dt) {
-
             return true;
         }
-        throw new Exception("Invalid Date", 1);
+
+        throw new Exception("Invalid Date: {$date}", 1);
     }
 
     protected function initializeDefaultDate()
     {
         $today = date("Y-m-d");
-        if ( ($this->dateStart == null) ||  ($this->dateEnd == null)) {
+        if (($this->dateStart == null) || ($this->dateEnd == null)) {
             $this->dateStart = $today;
             $this->dateEnd = $today;
         }
@@ -61,15 +76,21 @@ Abstract class Report
         }
     }
 
+    /**
+     * @param string $propertyName
+     * @return mixed
+     */
     public function __get($propertyName)
     {
-
-        if($this->{$propertyName}) {
+        if ($this->{$propertyName}) {
             return $this->{$propertyName};
         }
         return null;
     }
 
+    /**
+     * @return string
+     */
     public function getPartialApiRequest()
     {
         $this->prepareParameters();
@@ -77,28 +98,48 @@ Abstract class Report
         if ($this->parameters) {
             $query = http_build_query($this->parameters);
         }
-        $uri = static::END_POINT.'?'.$query;
+        $uri = static::END_POINT . '?' . $query;
+
         return $uri;
     }
 
+    /**
+     * @param string $source
+     * @return Report $this
+     * @throws Exception
+     */
     public function addDataSource($source)
     {
-        if (! in_array($source, static::VALID_DATA_SOURCES) ) {
-            throw new Exception("invalid data source", 1);
+        if (!in_array($source, static::VALID_DATA_SOURCES)) {
+            throw new Exception("invalid data source: {$source}", 1);
         }
+
         if (count($this->dataSources) < static::MAX_DATA_SOURCES) {
             $this->dataSources[] = $source;
             $this->extraFilters[] = $source;
         } else {
-            throw new Exception("you cannot add more than ".static::MAX_DATA_SOURCES." data sources at a time", 1);
+            throw new Exception(
+                sprintf(
+                    "You tried to add %s data sources. You can not add more than %s data sources at a time",
+                    count($this->dataSources),
+                    static::MAX_DATA_SOURCES
+                )
+                , 1
+            );
         }
 
         return $this;
     }
 
+    /**
+     * @param string $filterName
+     * @param mixed $value
+     * @return Report $this
+     * @throws Exception
+     */
     public function addFilter($filterName, $value)
     {
-        if (! in_array($filterName, $this->getValidFilters()) ) {
+        if (!in_array($filterName, $this->getValidFilters())) {
             throw new Exception("invalid filter", 1);
         }
         $this->filters[$filterName] = $value;
@@ -106,6 +147,9 @@ Abstract class Report
         return $this;
     }
 
+    /**
+     * @return array
+     */
     protected function getValidFilters()
     {
         return array_merge(static::VALID_FILTERS, $this->extraFilters);
@@ -115,7 +159,7 @@ Abstract class Report
     {
         $this->dataSources = [];
         $this->filters = [];
-        $this->extraFilters= [];
+        $this->extraFilters = [];
     }
 
     protected function prepareTimeParameters()
@@ -125,25 +169,25 @@ Abstract class Report
         $this->parameters['timezone'] = $this->timezone;
     }
 
-    protected function prepareDataSources($mandatory=[])
+    protected function prepareDataSources($mandatory = [])
     {
-        $group= $mandatory;
+        $group = $mandatory;
         foreach ($this->dataSources as $ds) {
             $group[] = $ds;
         }
         if (count($group) > 0) {
-           $this->parameters['group'] = $group; 
+            $this->parameters['group'] = $group;
         }
     }
 
     protected function prepareSearch()
     {
-        $search_fields= [];
+        $search_fields = [];
         foreach ($this->filters as $filter => $value) {
             $search_fields[] = json_encode(["term" => $filter, "query" => $value]);
         }
         if (count($search_fields) > 0) {
-           $this->parameters['search_fields'] = $search_fields; 
+            $this->parameters['search_fields'] = $search_fields;
         }
     }
 
