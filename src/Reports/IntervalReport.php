@@ -10,7 +10,7 @@ class IntervalReport extends Report
     protected $timeInterval;
 
     const END_POINT = "reports/interval.json";
-    const MAX_DATA_SOURCES = 5;
+    const MAX_DATA_SOURCES = 3;
     const VALID_DATA_SOURCES = ['tracker_id', 'affiliate', 'partner', 'product', 'sub_id'];
     const VALID_FILTERS = [];
 

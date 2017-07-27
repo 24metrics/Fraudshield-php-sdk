@@ -5,7 +5,7 @@ namespace Fraudshield\Reports;
 class FraudReport extends Report
 {
     const END_POINT = "reports/fraud.json";
-    const MAX_DATA_SOURCES = 5;
+    const MAX_DATA_SOURCES = 3;
     const VALID_DATA_SOURCES = ['sub_id', 'partner', 'affiliate', 'product', 'goal'];
     const VALID_FILTERS = [
         'min_conversions',
