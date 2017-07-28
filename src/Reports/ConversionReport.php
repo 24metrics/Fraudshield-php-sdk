@@ -17,7 +17,7 @@ class ConversionReport extends Report
         'sub_id',
         'status',
         'rejected_reason.simple_reason',
-        'rejected_reason.simple_reason',
+        'rejected_reason.advanced_reason',
         'min_score',
         'max_score'
     ];

@@ -56,7 +56,7 @@ Abstract class Report
     {
         $dt = DateTime::createFromFormat("Y-m-d", $date);
 
-        if ($dt) {
+        if ($dt->format("Y-m-d") == $date) {
             return true;
         }
 
@@ -140,7 +140,7 @@ Abstract class Report
     public function addFilter($filterName, $value)
     {
         if (!in_array($filterName, $this->getValidFilters())) {
-            throw new Exception("invalid filter", 1);
+            throw new Exception("invalid filter: {$filterName}", 1);
         }
         $this->filters[$filterName] = $value;
 

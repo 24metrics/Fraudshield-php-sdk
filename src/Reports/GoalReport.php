@@ -25,7 +25,7 @@ class GoalReport extends Report
     /**
      * GoalReport constructor.
      * @param int $trackerId
-     * @param string  $dateStart
+     * @param string $dateStart
      * @param string $dateEnd
      * @param string $timezone
      */
