@@ -56,7 +56,7 @@ Abstract class Report
     {
         $dt = DateTime::createFromFormat("Y-m-d", $date);
 
-        if ($dt) {
+        if ($dt->format("Y-m-d") == $date) {
             return true;
         }
 
