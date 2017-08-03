@@ -4,7 +4,6 @@ namespace Fraudshield\Exception;
 
 
 use Exception;
-use Throwable;
 
 class UnexpectedResponseException extends Exception
 {
@@ -17,7 +16,7 @@ class UnexpectedResponseException extends Exception
      * @param string $message
      * @param array $headers
      * @param array $info
-     * @param mixed $body
+     * @param string $body
      */
     public function __construct($message, $headers, $info, $body)
     {
@@ -36,9 +35,9 @@ class UnexpectedResponseException extends Exception
     }
 
     /**
-     * @return Throwable
+     * @return string
      */
-    public function getBody(): Throwable
+    public function getBody()
     {
         return $this->body;
     }
