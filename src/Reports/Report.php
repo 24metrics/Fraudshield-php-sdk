@@ -17,6 +17,8 @@ Abstract class Report
     protected $filters;
     protected $extraFilters;
 
+    protected $usesPostRequest;
+
     abstract protected function initializeDefaults();
 
     abstract protected function prepareParameters();
@@ -200,5 +202,11 @@ Abstract class Report
     {
         $this->parameters['count'] = $this->count;
         $this->parameters['page'] = $this->page;
+    }
+
+    public function usesPostRequest()
+    {
+
+        return $this->usesPostRequest;
     }
 }

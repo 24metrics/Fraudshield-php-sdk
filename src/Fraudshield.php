@@ -32,8 +32,12 @@ class Fraudshield
      */
     public function getReport(Report $report)
     {
-
         $apiRequest = $report->getPartialApiRequest();
+
+        if($report->usesPostRequest()) {
+
+            return $this->post($apiRequest, $report->parameters);
+        }
 
         return $this->get($apiRequest);
     }
@@ -66,7 +70,32 @@ class Fraudshield
 
         $data = curl_exec($ch);
         curl_close($ch);
+
         return $data;
 
+    }
+
+    /**
+     * @param string $uri
+     * @return mixed
+     */
+    public function post($uri, $data)
+    {
+
+
+        $url = $this->getBaseUrl($uri);
+        $httpQuery = http_build_query($data);
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS,  $httpQuery);
+        curl_setopt($ch, CURLOPT_URL, $url);
+
+        $data = curl_exec($ch);
+        curl_close($ch);
+
+        return $data;
     }
 }
