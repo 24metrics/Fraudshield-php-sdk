@@ -2,6 +2,7 @@
 
 namespace Fraudshield;
 
+use Fraudshield\Exception\UnexpectedResponseException;
 use Fraudshield\Reports\Report;
 
 class Fraudshield
@@ -30,7 +31,7 @@ class Fraudshield
      * @param Report $report
      * @return mixed
      */
-    public function getReport(Report $report)
+    public function getReport($report)
     {
         $apiRequest = $report->getPartialApiRequest();
 
@@ -54,9 +55,11 @@ class Fraudshield
             ]);
     }
 
+
     /**
-     * @param string $uri
+     * @param $uri
      * @return mixed
+     * @throws UnexpectedResponseException
      */
     public function get($uri)
     {
@@ -68,11 +71,37 @@ class Fraudshield
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_URL, $url);
 
-        $data = curl_exec($ch);
+        $headers = [];
+        curl_setopt($ch, CURLOPT_HEADERFUNCTION, function ($ch, $string) use (&$headers) {
+            $parts = explode(":", $string, 2);
+
+            if (count($parts) == 2) {
+                $name = trim($parts[0]);
+                $value = trim($parts[1]);
+
+                $headers[$name] = $value;
+            }
+
+            return strlen($string);
+        });
+
+        $body = curl_exec($ch);
+        $info = curl_getinfo($ch);
+
+
+        if ($info['http_code'] != 200) {
+            $message = sprintf(
+                "Request failed with response code %d for url %s\n",
+                $info['http_code'],
+                $url
+            );
+
+            throw new UnexpectedResponseException($message, $headers, $info,  $body);
+        }
+
         curl_close($ch);
 
-        return $data;
-
+        return $body;
     }
 
     /**
